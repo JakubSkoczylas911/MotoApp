@@ -1,15 +1,18 @@
 ﻿namespace MotoApp.Repositories
 {
     using MotoApp.Entities;
-    public class GenericRepository<T> where T : IEntity
+    public class GenericRepository<TEntity,TKey> 
+        where TEntity : IEntity
     {
-        protected readonly List<T> _items = new();
-        public void Add(T item)
+        public TKey? Key { get; set; }
+    
+        protected readonly List<TEntity> _items = new();
+        public void Add(TEntity item)
         {
             item.Id = _items.Count + 1;
             _items.Add(item);
         }
-        public T GetById(int id)
+        public TEntity GetById(int id)
         {
             return _items.Single(item => item.Id == id);
         }
