@@ -1,11 +1,12 @@
 ﻿namespace MotoApp.Repositories
 {
     using MotoApp.Entities;
-    public class GenericRepository<TEntity,TKey> 
-        where TEntity : IEntity
+    public class GenericRepository<TEntity, TKey>
+        where TEntity : /*class,*/ IEntity
+        //where TKey : struct
     {
         public TKey? Key { get; set; }
-    
+
         protected readonly List<TEntity> _items = new();
         public void Add(TEntity item)
         {
@@ -14,6 +15,8 @@
         }
         public TEntity GetById(int id)
         {
+            //return default(TEntity);
+
             return _items.Single(item => item.Id == id);
         }
         public void Save()
