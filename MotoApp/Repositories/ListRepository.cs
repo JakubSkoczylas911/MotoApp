@@ -1,15 +1,15 @@
 ﻿namespace MotoApp.Repositories
 {
     using MotoApp.Entities;
-    public class ListRepository<T>:IRepository<T> where T: class,IEntity, new()
-       
+    public class ListRepository<T> : IRepository<T> where T : class, IEntity, new()
+
     {
         private readonly List<T> _items = new();
         public IEnumerable<T> GetAll()
         {
             return _items.ToList();
         }
-       public T GetById(int id)
+        public T GetById(int id)
         {
 
 
@@ -27,7 +27,7 @@
         public void Save()
         {
 
-            }
         }
     }
+}
 

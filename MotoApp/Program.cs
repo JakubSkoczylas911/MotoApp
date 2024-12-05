@@ -5,12 +5,12 @@ var employeeRepository = new SqlRepository<Employee>(new MotoAppDbContext());
 AddEmployees(employeeRepository);
 AddManagers(employeeRepository);
 WriteAllToConsole(employeeRepository);
-static void AddEmployees(IRepository<Employee> employeeReository)
+static void AddEmployees(IRepository<Employee> employeeRepository)
 {
-    employeeReository.Add(new Employee { FirstName = "Adam" });
-    employeeReository.Add(new Employee { FirstName = "Piotr" });
-    employeeReository.Add(new Employee { FirstName = "Zuzia" });
-    employeeReository.Save();
+    employeeRepository.Add(new Employee { FirstName = "Adam" });
+    employeeRepository.Add(new Employee { FirstName = "Piotr" });
+    employeeRepository.Add(new Employee { FirstName = "Zuzia" });
+    employeeRepository.Save();
 }
 static void AddManagers(IWriteRepository<Manager> managerRepository)
 {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MotoApp.Entities;
 
-public class SqlRepository<T>:IRepository<T>where T: class,IEntity,new()
+public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
 {
     private readonly DbSet<T> _dbSet;
     private readonly DbContext _dbContext;
@@ -15,6 +15,7 @@ public class SqlRepository<T>:IRepository<T>where T: class,IEntity,new()
     {
         return _dbSet.ToList();
     }
+
     public T GetById(int id)
     {
         return _dbSet.Find(id);
@@ -31,4 +32,6 @@ public class SqlRepository<T>:IRepository<T>where T: class,IEntity,new()
     {
         _dbContext.SaveChanges();
     }
+
+
 }
