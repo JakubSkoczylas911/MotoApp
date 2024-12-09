@@ -3,20 +3,25 @@ using MotoApp.Entities;
 using MotoApp.Repositories;
 var employeeRepository = new SqlRepository<Employee>(new MotoAppDbContext());
 AddEmployees(employeeRepository);
-AddManagers(employeeRepository);
 WriteAllToConsole(employeeRepository);
 static void AddEmployees(IRepository<Employee> employeeRepository)
 {
-    employeeRepository.Add(new Employee { FirstName = "Adam" });
-    employeeRepository.Add(new Employee { FirstName = "Piotr" });
-    employeeRepository.Add(new Employee { FirstName = "Zuzia" });
-    employeeRepository.Save();
+    var employees = new[]
+    {
+        new Employee { FirstName = "Adam" },
+        new Employee { FirstName = "Piotr" },
+        new Employee { FirstName = "Zuzia" }
+    };
+    AddBatch(employeeRepository, employees);
 }
-static void AddManagers(IWriteRepository<Manager> managerRepository)
+static void AddBatch<T>(IRepository<T> repository, T[] items)
+    where T : class, IEntity
 {
-    managerRepository.Add(new Manager { FirstName = "Przemek" });
-    managerRepository.Add(new Manager { FirstName = "Tomek" });
-    managerRepository.Save();
+    foreach (var employee in items)
+    {
+        repository.Add(employee);
+    }
+    repository.Save();
 }
 static void WriteAllToConsole(IReadRepository<IEntity> repository)
 {
