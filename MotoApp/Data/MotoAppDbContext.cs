@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MotoApp.Entities;
 
+
 public class MotoAppDbContext : DbContext
 {
     public DbSet<Employee> Employees => Set<Employee>();

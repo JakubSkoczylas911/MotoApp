@@ -1,6 +1,7 @@
 ﻿namespace MotoApp.Repositories;
 using MotoApp.Entities;
 
+
 public interface IReadRepository<out T> where T : class, IEntity
 
 {

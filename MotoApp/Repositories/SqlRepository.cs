@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MotoApp.Entities;
 
+
 public class SqlRepository<T> : IRepository<T> where T : class, IEntity, new()
 {
     private readonly DbSet<T> _dbSet;

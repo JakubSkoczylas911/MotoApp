@@ -1,5 +1,6 @@
 ﻿namespace MotoApp.Entities
 {
+    
     public class Employee:EntityBase
     {
         public Employee()

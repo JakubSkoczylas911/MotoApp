@@ -2,6 +2,7 @@
 using MotoApp.Entities;
 using MotoApp.Repositories;
 using MotoApp.Repositories.Extensions;
+
 var employeeRepository = new SqlRepository<Employee>(new MotoAppDbContext());
 AddEmployees(employeeRepository);
 WriteAllToConsole(employeeRepository);
