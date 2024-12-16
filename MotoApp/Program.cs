@@ -6,15 +6,15 @@ using MotoApp.Repositories.Extensions;
 var employeeRepository = new SqlRepository<Employee>(new MotoAppDbContext());
 AddEmployees(employeeRepository);
 WriteAllToConsole(employeeRepository);
-static void AddEmployees(IRepository<BusinessPartner> businessPartnerRepository)
+static void AddEmployees(IRepository<Employee> repository)
 {
-    var bussinessPartners = new[]
+    var employees = new[]
     {
-        new BusinessPartner {},
-        new BusinessPartner { },
-        new BusinessPartner { },
+        new Employee {FirstName="Adam"},
+        new Employee {FirstName="Piotr" },
+        new Employee {FirstName="Zuzanna" },
     };
-    businessPartnerRepository.AddBatch(bussinessPartners);
+    repository.AddBatch(employees);
     //    AddBatch(employeeRepository, employees);
     //}
     //static void AddBatch<T>(IRepository<T> repository, T[] items)
@@ -26,12 +26,13 @@ static void AddEmployees(IRepository<BusinessPartner> businessPartnerRepository)
     //    }
     //    repository.Save();
     //}
-    static void WriteAllToConsole(IReadRepository<IEntity> repository)
+
+}
+static void WriteAllToConsole(IReadRepository<IEntity> repository)
+{
+    var items = repository.GetAll();
+    foreach (var item in items)
     {
-        var items = repository.GetAll();
-        foreach (var item in items)
-        {
-            Console.WriteLine(item);
-        }
+        Console.WriteLine(item);
     }
 }

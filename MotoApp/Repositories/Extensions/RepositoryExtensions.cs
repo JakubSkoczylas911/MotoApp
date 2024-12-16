@@ -1,6 +1,7 @@
 ﻿namespace MotoApp.Repositories.Extensions;
 using MotoApp.Entities;
 
+
 public static class RepositoryExtensions
 {
     public static void AddBatch<T>(this IRepository<T> repository, T[] items)
