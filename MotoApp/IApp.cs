@@ -1,7 +1,7 @@
 ﻿namespace MotoApp;
-   public interface IApp
-    {
+public interface IApp
+{
     void Run();
-    }
+}
 
 
