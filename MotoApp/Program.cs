@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MotoApp;
+using MotoApp.DataProviders;
 using MotoApp.Entities;
 using MotoApp.Repositories;
 var services = new ServiceCollection();
 services.AddSingleton<IRepository<Employee>, ListRepository<Employee>>();
+services.AddSingleton<ICarsProvider, CarsProvider>();
 services.AddSingleton<IApp, App>();
 var serviceProvider = services.BuildServiceProvider();
 var app = serviceProvider.GetService<IApp>()!;
