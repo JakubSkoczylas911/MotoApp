@@ -57,7 +57,7 @@ public class CarsProvider : ICarsProvider
         return cars.OrderBy(x => x.Name).ToList();
     }
 
-    List<Car> OrderByNameDescending()
+    public List<Car> OrderByNameDescending()
     {
         var cars = _carsRepository.GetAll();
         return cars.OrderByDescending(x => x.Name).ToList();
@@ -78,6 +78,16 @@ public class CarsProvider : ICarsProvider
             .OrderByDescending(x => x.Color)
             .ThenByDescending(x => x.Name)
             .ToList();
+    }
+    public List<Car> WhereStartsWith(string prefix)
+    {
+        var cars = _carsRepository.GetAll();
+        return cars.Where(x => x.Name.StartsWith(prefix)).ToList();
+    }
+    public List<Car> WhereStartsWithAndCostIsGreaterThan(string prefix, decimal cost)
+    {
+        var cars = _carsRepository.GetAll();
+        return cars.Where(x => x.Name.StartsWith(prefix) && x.StandardCost > cost).ToList();
     }
 
 
