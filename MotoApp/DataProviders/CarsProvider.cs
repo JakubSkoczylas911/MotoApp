@@ -1,5 +1,6 @@
 ﻿
 using System.Text;
+using MotoApp.DataProviders.Extensions;
 using MotoApp.Repositories;
 
 namespace MotoApp.DataProviders;
@@ -89,7 +90,11 @@ public class CarsProvider : ICarsProvider
         var cars = _carsRepository.GetAll();
         return cars.Where(x => x.Name.StartsWith(prefix) && x.StandardCost > cost).ToList();
     }
-
+    public List<Car> WhereColorIs(string color)
+    {
+        var cars = _carsRepository.GetAll();
+        return cars.ByColor("Red").ToList();
+    }
 
     public List<string> GetUniqueCarColors()
     {
