@@ -162,6 +162,23 @@ public class CarsProvider : ICarsProvider
             .SkipWhile(x => x.Name.StartsWith(prefix))
             .ToList();
     }
+    public List<string> DistinctAllColors()
+    {
+        var cars = _carsRepository.GetAll();
+        return cars
+            .Select(x => x.Color)
+            .Distinct()
+            .OrderBy(c => c)
+            .ToList();
+    }
+    public List<Car> DistinctByColors()
+    {
+        var cars = _carsRepository.GetAll();
+        return cars
+            .DistinctBy(x => x.Color)
+            .OrderBy(x => x.Color)
+            .ToList();
+    }
     public List<string> GetUniqueCarColors()
     {
         var cars = _carsRepository.GetAll();
