@@ -179,6 +179,11 @@ public class CarsProvider : ICarsProvider
             .OrderBy(x => x.Color)
             .ToList();
     }
+    public List<Car[]> ChunkCars(int size)
+    {
+        var cars = _carsRepository.GetAll();
+        return cars.Chunk(size).ToList();
+    }
     public List<string> GetUniqueCarColors()
     {
         var cars = _carsRepository.GetAll();
