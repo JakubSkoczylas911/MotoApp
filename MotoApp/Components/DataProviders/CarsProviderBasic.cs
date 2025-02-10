@@ -1,6 +1,6 @@
-﻿using MotoApp.Repositories;
+﻿using MotoApp.Data.Repositories;
 
-namespace MotoApp.DataProviders;
+namespace MotoApp.Components.DataProviders;
 
 public class CarsProviderBasic : ICarsProvider
 {

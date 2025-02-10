@@ -1,10 +1,10 @@
 ﻿
 using System.Text;
 using System.Xml.Linq;
-using MotoApp.DataProviders.Extensions;
-using MotoApp.Repositories;
+using MotoApp.Components.DataProviders.Extensions;
+using MotoApp.Data.Repositories;
 
-namespace MotoApp.DataProviders;
+namespace MotoApp.Components.DataProviders;
 public class CarsProvider : ICarsProvider
 {
     private readonly IRepository<Car> _carsRepository;
