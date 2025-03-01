@@ -1,35 +1,33 @@
-﻿using MotoApp.Data.Entities;
-using MotoApp.Data.Repositories;
-
-namespace MotoApp;
+﻿namespace MotoApp;
+using MotoApp.Components.CsvReader;
 public class App : IApp
 {
-    private readonly IRepository<Employee> _employeeRepository;
-    public App(IRepository<Employee> employeeRepository)
+    private readonly ICsvReader _csvReader;
+    public App(ICsvReader csvReader)
     {
-        _employeeRepository = employeeRepository;
-
+        _csvReader = csvReader;
     }
     public void Run()
     {
-        Console.WriteLine("I'm here in Run() method");
-        var employees = new[]
+        var cars = _csvReader.ProcessCars("Resources\\Files\\fuel.csv");
+        var manufacturers = _csvReader.ProcessManufactures("Resources\\Files\\manufacturers.csv");
+        var groups = cars
+            .GroupBy(x => x.Manufacturer)
+            .Select(g => new
+            {
+                Name = g.Key,
+                Max = g.Max(cars => cars.Combined),
+                Average = g.Average(c => c.Combined)
+            })
+            .OrderBy(x => x.Average);
+        foreach (var group in groups)
         {
-            new Employee { FirstName = "Zuzanna" },
-            new Employee { FirstName = "Adam" },
-            new Employee { FirstName = "Piotr" }
-        };
-        foreach (var emplyee in employees)
-        {
-            _employeeRepository.Add(emplyee);
-        }
-        _employeeRepository.Save();
-        var items = _employeeRepository.GetAll();
-        foreach (var item in items)
-        {
-            Console.WriteLine(item);
+            Console.WriteLine($"{group.Name}");
+            Console.WriteLine($"Max:{group.Max}");
+            Console.WriteLine($"Average:{group.Average}");
         }
     }
 }
+    
 
-
+    
