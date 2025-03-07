@@ -1,5 +1,7 @@
 ﻿namespace MotoApp;
 using MotoApp.Components.CsvReader;
+using MotoApp.Components.CsvReader.Models;
+
 public class App : IApp
 {
     private readonly ICsvReader _csvReader;
@@ -26,7 +28,9 @@ public class App : IApp
         //    Console.WriteLine($"Max:{group.Max}");
         //    Console.WriteLine($"Average:{group.Average}");
         //}
-        var carsInCountry = cars.Join(manufacturers, x => x.Manufacturer, x => x.Name,
+        var carsInCountry = cars.Join(manufacturers,
+            c => new { c.Manufacturer, c.Year },
+            m => new { Manufacturer = m.Name, m.Year },
             (car, manufacturer) =>
             new
             {
