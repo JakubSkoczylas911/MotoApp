@@ -1,6 +1,7 @@
 ﻿namespace MotoApp;
+using System.Xml.Linq;
 using MotoApp.Components.CsvReader;
-using MotoApp.Components.CsvReader.Models;
+
 
 public class App : IApp
 {
@@ -11,30 +12,42 @@ public class App : IApp
     }
     public void Run()
     {
-        var cars = _csvReader.ProcessCars("Resources\\Files\\fuel.csv");
-        var manufacturers = _csvReader.ProcessManufactures("Resources\\Files\\manufacturers.csv");
-        var groups = manufacturers.GroupJoin(
-            cars,
-            manufacturer => manufacturer.Name,
-            car => car.Manufacturer,
-            (m, g) =>
-            new
-            {
-                Manufacturer = m,
-                Cars = g
-            })
-            .OrderBy(x => x.Manufacturer.Name);
-        foreach (var car in groups)
-        {
-            Console.WriteLine($"Manufacturer:{car.Manufacturer.Name}");
-            Console.WriteLine($"Cars:{car.Cars.Count()}");
-            Console.WriteLine($"Max:{car.Cars.Max(x => x.Combined)}");
-            Console.WriteLine($"Min:{car.Cars.Min(x => x.Combined)}");
-            Console.WriteLine($"Avg:{car.Cars.Average(x => x.Combined)}");
-            Console.WriteLine();
-        }
+        var records = _csvReader.ProcessCars("Resources\\Files\\fuel.csv");
+        var document = new XDocument();
+        var cars = new XElement("Cars", records
+            .Select(x =>
+            new XElement("Car",
+            new XAttribute("Name", x.Name),
+            new XAttribute("Combined", x.Combined),
+            new XAttribute("Manufacturer", x.Manufacturer))));
+        document.Add(cars);
+        document.Save("fuel.xml");
     }
 }
+
+//        var manufacturers = _csvReader.ProcessManufactures("Resources\\Files\\manufacturers.csv");
+//        var groups = manufacturers.GroupJoin(
+//            cars,
+//            manufacturer => manufacturer.Name,
+//            car => car.Manufacturer,
+//            (m, g) =>
+//            new
+//            {
+//                Manufacturer = m,
+//                Cars = g
+//            })
+//            .OrderBy(x => x.Manufacturer.Name);
+//        foreach (var car in groups)
+//        {
+//            Console.WriteLine($"Manufacturer:{car.Manufacturer.Name}");
+//            Console.WriteLine($"Cars:{car.Cars.Count()}");
+//            Console.WriteLine($"Max:{car.Cars.Max(x => x.Combined)}");
+//            Console.WriteLine($"Min:{car.Cars.Min(x => x.Combined)}");
+//            Console.WriteLine($"Avg:{car.Cars.Average(x => x.Combined)}");
+//            Console.WriteLine();
+//        }
+//    }
+//}
 
 //    .GroupBy(x => x.Manufacturer)
 //    .Select(g => new
