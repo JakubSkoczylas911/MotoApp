@@ -12,6 +12,25 @@ public class App : IApp
     }
     public void Run()
     {
+        CreateXml();
+        QueryXml();
+    }
+    private static void QueryXml()
+    {
+        var document = XDocument.Load("fuel.xml");
+        var names = document
+            .Element("Cars")?
+            .Elements("Car")
+            .Where(x => x.Attribute("Manufacturer")?.Value == "BMW")
+            .Select(x => x.Attribute("Name")?.Value);
+        foreach (var name in names)
+        {
+            Console.WriteLine(name);
+        }
+    }
+
+    private void CreateXml()
+    {
         var records = _csvReader.ProcessCars("Resources\\Files\\fuel.csv");
         var document = new XDocument();
         var cars = new XElement("Cars", records
